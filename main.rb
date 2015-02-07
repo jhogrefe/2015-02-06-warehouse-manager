@@ -10,8 +10,10 @@ require 'sqlite3'
 DATABASE = SQLite3::Database.new('warehousemanager.db')
 
 # Here, we c
+
 require_relative "category"
 require_relative "location"
 require_relative "product"
+
 
 binding.pry
