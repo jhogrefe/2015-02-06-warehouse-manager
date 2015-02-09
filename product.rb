@@ -138,19 +138,136 @@ class Product
 
     return results[0]
   end
-  
-  # def self.find(number)
-  #   results = DATABASE.execute("SELECT * FROM products WHERE id =
-  #                               #{number}")
-  #   #results should only return one position in the array since we're
-  #   #only requesting one variable:
+
+  # Public: .assign_product_location
+  # A class method to move a product to a different location by assigning
+  # a value to the location_id field in the 'products' table.
   #
+  # Parameters:
+  # existing_product_key - Integer, the primary key for the product record
+  #                        being assigned a product location.
+  # desired_location_id  - Integer, the value being set in location_id field
+  #                        that references the primary key in the locations
+  #                        table.
+  # Returns:
+  # None.
+  # 
+  # State Changes:
+  # Integer, sets the field value for location_id and updates the products
+  # table in the database.
+  def self.assign_product_location(existing_product_key, desired_location_id)
+    x = existing_product_key
+    y = desired_location_id
+    
+    # consider using part or all of the code below for the cli menu conditionals
+    # location_catcher = []
+    # new_fetch = Product.fetch_product_record(x)
+    # location_catcher = new_fetch[0]
+    # puts location_catcher
+    
+    DATABASE.execute("UPDATE products SET location_id = #{y} 
+                      WHERE id = #{x}")
+  end
+
+  # Public: .assign_product_category
+  # A class method to assign a product to a category by assigning
+  # a value to the category_id field in the 'products' table.
   #
+  # Parameters:
+  # existing_product_key - Integer, the primary key for the product record
+  #                        being assigned a product category.
+  # desired_category_id  - Integer, the value being set in category_id field
+  #                        that references the primary key in the categories
+  #                        table.
+  # Returns:
+  # None.
+  # 
+  # State Changes:
+  # Integer, sets the field value for category_id and updates the products
+  # table in the database.  
+  def self.assign_product_category(existing_product_key, desired_category_id)
+    x = existing_product_key
+    y = desired_category_id
+    
+    DATABASE.execute("UPDATE products SET category_id = #{y} 
+                      WHERE id = #{x}")
+  end
+
+  # Public: .update_product_quantity
+  # A class method to set or update the product quantity field.
   #
-  #   return results[0]
-  #   #self.new is a new class instance that will return an array containing
-  #   #one record as a hash
-  #   # record_details = results[0]
-  #   # self.new("id" => "{record_details}")
-  # end
+  # Parameters:
+  # existing_product_key - Integer, the primary key for the product record
+  #                        being assigned a new quantity value.
+  # desired_quantity     - Integer, the value being set in quantity field.
+  #  
+  # Returns:
+  # None.
+  # 
+  # State Changes:
+  # Integer, sets the field value for quantity and updates the products
+  # table in the database.
+  def self.update_product_quantity(existing_product_key, desired_quantity)
+    x = existing_product_key
+    y = desired_quantity
+    
+    DATABASE.execute("UPDATE products SET quantity = #{y} 
+                      WHERE id = #{x}")
+  end
+
+  # Public: .where_products_in_category
+  # A class method to fetch a list of products assigned to a category.
+  #
+  # Parameters:
+  # category_id - Integer, the value for the category_id field.
+  #
+  # Returns:
+  # A collection of products with the given category_id.
+  # 
+  # State Changes:
+  # None.
+  def self.where_products_in_category(category_id)
+    results = DATABASE.execute("SELECT * FROM products WHERE category_id = 
+                                 #{category_id}")
+                                 
+    #create an empty array to pass in each separate hash:
+    # results_changed_to_objects = []
+    # results_changed_to_objects = results
+
+    # results.each do |database_hashes|
+    # results_changed_to_objects << self.new(database_hashes)
+    #
+    # end
+    # results_changed_to_objects
+    results
+  end
+
+  # Public: .where_products_in_location
+  # A class method to fetch a list of products assigned to a location.
+  #
+  # Parameters:
+  # category_id - Integer, the value for the location_id field.
+  #
+  # Returns:
+  # A collection of products with the given location_id.
+  # 
+  # State Changes:
+  # None.  
+  def self.where_products_in_location(location_id)
+    results = DATABASE.execute("SELECT * FROM products WHERE location_id = 
+                                 #{location_id}")
+                                 
+    #create an empty array to pass in each separate hash:
+    # results_changed_to_objects = []
+    # results_changed_to_objects = results
+
+    # results.each do |database_hashes|
+    # results_changed_to_objects << self.new(database_hashes)
+    #
+    # end
+    # results_changed_to_objects
+    
+    results
+  end
+    
 end
